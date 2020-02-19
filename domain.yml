@@ -2,23 +2,30 @@ session_config:
   session_expiration_time: 60.0
   carry_over_slots_to_new_session: true
 intents:
-- ask_check_sc_digital
-- greet
-- goodbye
-- mood_great
+- cumprimentar
+- despedir
+- ask_sc_digital
+- informa_servico
+entities:
+- cpf
 slots:
-  nome:
+  cpf:
     type: text
 responses:
-  utter_greet:
-  - text: Olá, {nome}! Como estás?
-  utter_goodbye:
-  - text: Tchau
-  utter_default:
-  - text: Desculpe, mas não entendi o que você disse :( Podes repetir?
+  utter_cumprimentar:
+  - text: "Oi, eu sou um bot, um assistente virtual!\nManda aí um serviço digital\
+      \ que você gostaria de acessar :)\n"
+  utter_despedir:
+  - text: "Foi um prazer te ajudar!\nSempre que tiver alguma dúvida, volte aqui!\n\
+      Até logo!\n"
+  - text: "Foi um prazer te ajudar!\nSempre que precisar, volte aqui!\nAté a próxima!\n"
+  - text: "Foi um prazer te ajudar!\nQuando surgir alguma dúvida, volte aqui!\nAté\
+      \ mais!\n"
+  utter_continuar_conversa:
+  - text: "E aí, qual o próximo serviço que você deseja acessar?\n"
 actions:
-- utter_default
-- utter_greet
-- utter_goodbye
+- utter_cumprimentar
+- utter_despedir
+- utter_continuar_conversa
 - action_servicos_sc_digital
-- action_fetch_profile
+- action_servico

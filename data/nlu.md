@@ -1,27 +1,21 @@
-## intent:ask_check_sc_digital
+## intent:ask_sc_digital
 - Quais os serviços disponíveis?
 - servicos
 - scdigital
 - servico
 - listar servicos
 
-## intent:greet
+## intent:cumprimentar
 - Oi
 - Olá
 - Bom dia
 - Boa noite
 
-## intent:goodbye
+## intent:despedir
 - tchau
 - até logo
 
-## intent:mood_great
-- perfect
-- very good
-- great
-- amazing
-- wonderful
-- I am feeling very good
-- I am great
-- I'm good
-
+## intent:informa_servico
+- o servico é [000.000.000-00](cpf)
+- sim, o servico [000.000.000-00](cpf)
+- servico é [000.000.000-00](cpf)
