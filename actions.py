@@ -6,6 +6,7 @@
 
 from rasa_sdk import Action
 import requests
+import webbrowser
 
 from typing import Any, Text, Dict, List
 
@@ -13,33 +14,46 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 
-API_URL = "http://api-cartaweb-hom.intranet.ciasc.gov.br/api/pesquisa-servico?page=1&cdtipo=1&q=teatro"
+API_URL = "http://api-cartaweb-hom.intranet.ciasc.gov.br/api/pesquisa-servico?page=1&cdtipo=1&q="
+URL_DETALHE_SERVICO = "http://cartaweb-hom.ciasc.sc.gov.br/servicos/detalhe/"
 
-class ApiAction(Action):
-	def name(self):
-		return "action_servicos_sc_digital"
+class OpenServicoSCDigital(Action):
+    def name(self):
+        return 'open_servico_scdigital'
 
-	def run(self, dispatcher, tracker, domain):
-		res = requests.get(API_URL)
-		if res.status_code == 200:
-			data = res.json()["data"]
-			servico = data[0]
+    def run(sel, dispatcher, tracker, domain):
+        servico_solicitado = tracker.get_slot('servico_solicitado')
+        print(servico_solicitado)
 
-			out_message = "Serviço encontrado {}.".format(servico["nmdescricao"])
-			dispatcher.utter_message(out_message)
+        webbrowser.open(URL_DETALHE_SERVICO + servico_solicitado)
 
-		return []
+        return []
 
 class ActionServico(Action):
     def name(self) -> Text:
-        return "action_servico"
+        return "get_servico_scdigital"
 
     def run(self, dispatcher, tracker, domain):
-        cpf = tracker.get_slot('cpf')
-        print(cpf)
+        servico = tracker.get_slot('servico')
+        print(servico)
 
-        try:
-            dispatcher.utter_message("O seu serviço é {}?".format(cpf))
-        except ValueError:
-            dispatcher.utter_message(ValueError)
-        return [SlotSet("cpf", cpf)]
+        query_url = API_URL + servico
+        print(query_url)
+        res = requests.get(query_url)
+
+        if res.status_code == 200:
+            data = res.json()["data"]
+            buttons = []
+
+            for servico_scdigital in data:
+                nome_servico = servico_scdigital['nmtitulo']
+                slug_servico = servico_scdigital['nmslug']
+
+                buttons.append({ "title": nome_servico, "payload": '/acessar_servico{"servico_solicitado": "' + slug_servico + '"}' })
+
+            try:
+                dispatcher.utter_message(text="Sim! Clique no serviço que melhor atende você!", buttons=buttons)
+            except ValueError:
+                dispatcher.utter_message(ValueError)
+
+        return [SlotSet('servico_solicitado', servico)]

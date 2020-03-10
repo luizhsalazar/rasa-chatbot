@@ -16,6 +16,11 @@
 - até logo
 
 ## intent:informa_servico
-- o servico é [000.000.000-00](cpf)
-- sim, o servico [000.000.000-00](cpf)
-- servico é [000.000.000-00](cpf)
+- gostaria de pesquisar o servico [reservar teatro](servico)
+- o serviço [certidão](servico) existe?
+- o servico que busco é [reservar pauta](servico)
+- sim, o servico [emitir certidão](servico)
+- servico é [detran](servico)
+
+## intent:acessar_servico
+- /acessar_servico
