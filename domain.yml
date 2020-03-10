@@ -26,7 +26,7 @@ responses:
   - text: "Foi um prazer te ajudar!\nQuando surgir alguma dúvida, volte aqui!\nAté\
       \ mais!\n"
   utter_continuar_conversa:
-  - text: "E aí, qual o próximo serviço que você deseja acessar?\n"
+  - text: "E aí, deseja acessar mais algum serviço?\n"
 actions:
 - utter_cumprimentar
 - utter_despedir

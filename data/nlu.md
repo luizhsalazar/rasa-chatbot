@@ -24,3 +24,4 @@
 
 ## intent:acessar_servico
 - /acessar_servico
+- /acessar_servico{"servico_solicitado": "agendar-retirada-de-cargas"}
